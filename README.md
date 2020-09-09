@@ -4,6 +4,8 @@ StretchFinder is a tool that helps to analyze the codon composition in genomes. 
 
 For any suggestion, bugs or problems, please contact: helena.96.14@gmail.com
 
+Find the tutorial videos here: https://drive.google.com/drive/folders/1HXofA7PAP9TPTuSvfZC8v7qCtCyZPvM2?usp=sharing
+
 ## Prerequisites
 
 * Download the program from GitHub   
