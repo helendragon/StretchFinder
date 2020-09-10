@@ -316,7 +316,7 @@ def GetUsage (FastaDir, CodonList, OutputDir):
     mean=all_df.mean()
     #print(mean)
     test=mean.tolist() #els means de totes les columnes en format llista!
-    test=test[:-2]
+    test=test[:-3]
 
     #fem el grafic
 
