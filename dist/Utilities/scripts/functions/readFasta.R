@@ -51,7 +51,7 @@ write('Created....readFasta(fastaFile, checkNames, save, path)\nOutput....genFas
 #path<-"/mnt/lribas/users/arafels/irbPhd/1_projects/1_stretch/computational/r/data/Klebsiella/"
 
 
-checkmRNA<-function(fastaFile, path){
+checkmRNA<-function(fastaFile, path, winSize){
     setwd(path)
     n<-length(fastaFile)
     fileName<-'genFastaClean.txt'
@@ -69,38 +69,37 @@ checkmRNA<-function(fastaFile, path){
     #sum(e==5)
     #write.table(t, file='')
     ################
-    e<-sapply(fastaFile, check2)
+    e<-sapply(fastaFile, check2, winSize)
     write(paste('Number of correct genes: ', sum(e==0),' (',round ( (sum(e==0)*100)/n , 4), '%)'), file=fileName, append=TRUE)
     write(paste('NOT multiple of 3:       ', sum(e==3),' (',round ( (sum(e==3)*100)/n , 4), '%)'), file=fileName, append=TRUE)
     write(paste('NOT with ATG:            ', sum(e==1),' (',round ( (sum(e==1)*100)/n , 4), '%)'), file=fileName, append=TRUE)
     write(paste('NOT with stop codon:     ', sum(e==2),' (',round ( (sum(e==2)*100)/n , 4), '%)'), file=fileName, append=TRUE)
+    write(paste('Short Sequences:     ', sum(e==4),' (',round ( (sum(e==4)*100)/n , 4), '%)'), file=fileName, append=TRUE)
     genFastaClean<-fastaFile[e==0]
     return(genFastaClean)
     #save(genFastaClean, file='genFastaClean.Rdata')
     #load('geFastaClean.Rdata')
 }
 
-check2<-function(sequence){
-    #print(sequence)
-    #print(sequence[1:3])
-    #print(length(sequence))
+check2<-function(sequence, winSize){
+
     l<-length(sequence)
-    #print(l)
-    #print(sequence[(l-2):l])
+
     if(l%%3 != 0){
         return(3)
     }
     atg<-toString(paste(sequence[1:3],collapse=''))#convertir a string
-    #print(atg)
-    #print( atg =='ATG' )#comparar amb ATG
+
     if(atg != 'ATG'){
         return(1)
     }
     stp<<-toString(paste(sequence[(l-2):l],collapse=''))#convertir a string
-    #print(stp)
-    #print((stp!='TAG')&(stp!='TAA')&(stp!='TGA'))
+    
     if((stp!='TAG')&(stp!='TAA')&(stp!='TGA')){
         return(2)
+    }
+    if(l/3 < winSize){
+        return(4)
     }
     else{
         return(0)

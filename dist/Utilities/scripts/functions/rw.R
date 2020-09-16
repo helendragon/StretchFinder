@@ -20,8 +20,7 @@ rw<-function(path=NULL, winSize=NULL, thr=NULL, sourceFasta=NULL ,fasta=T, matri
         setwd(path)
         genFasta<-readFasta(sourceFasta,T,F,path)
         save(genFasta, file='genFasta.Rdata')
-        # genFasta_<<-genFasta
-        genFastaClean<-checkmRNA(genFasta, path)
+        genFastaClean<-checkmRNA(genFasta, path, winSize)
         save(genFastaClean, file='genFastaClean.Rdata')
     }
     if(fasta=='R' & is.null(sourceFasta)){ #no sourceFasta defined, read Rdata

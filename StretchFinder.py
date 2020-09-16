@@ -299,7 +299,7 @@ def runp():
         run=open(name, "w")
         
         run.write("rm(list=ls())"+"\n")
-        run.write("options(stringsAsFactors=FALSE)"+"\n")
+        run.write("options(stringsAsFactors=FALSE)"+"\n"+ "options(warn=-1)\n")
         if platform.system() !="Windows": #mirem quin OS es
             run.write("setFunc <- '"+ directori+"/Utilities/scripts/functions/strLibrary.R'\n")
             core=", core=8"
